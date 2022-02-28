@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <MyHeader @getEmettiValore="getValoreSelezionato"/>
-    <MyMain :filmList="filmList"/>
+    <SerieTv :List="tvList"/>
+    <BoolFilm :List="filmList"/>
   </div>
 </template>
 
@@ -10,25 +11,36 @@
 const axios = require('axios');
 // collegamenti con componenti header e main
 import MyHeader from './components/MyHeader.vue'
-import MyMain from './components/MyMain.vue'
+import SerieTv from './components/SerieTv.vue'
+import BoolFilm from './components/BoolFilm.vue'
 
 
 export default {
   name: 'App',
   components: {
     MyHeader,
-    MyMain
+    SerieTv,
+    BoolFilm
   },
   data() {
     return {
-      // array lista dei film 
+      // array lista dei film
+      tvList: [],
       filmList: [],
       cercaValore: "",
     };
   },
   methods: {
-    // funzione che richiama attraverso axios api dei film
-    getUrl(string) {
+    // funzione che richiama attraverso axios api delle serie tv
+    getSerieTvUrl(string) {
+      // riporto il valore string come valore della query in modo tale che mi riporti tutti i valori di tutti i film
+      axios.get(`https://api.themoviedb.org/3/search/tv?api_key=8a21c58330da7597aae0055b9b34eb91&query=${string}&language=it_IT`)
+      .then((risposta) => {
+        this.tvList = risposta.data.results;
+      });
+    },
+     // funzione che richiama attraverso axios api dei film
+    getFilmUrl(string) {
       // riporto il valore string come valore della query in modo tale che mi riporti tutti i valori di tutti i film
       axios.get(`https://api.themoviedb.org/3/search/movie?api_key=8a21c58330da7597aae0055b9b34eb91&query=${string}&language=it_IT`)
       .then((risposta) => {
@@ -38,7 +50,8 @@ export default {
     // funzione che ricerca il nome/genere selezionato in input all'interno della funzione getUrl(axios api)
     getValoreSelezionato(value) {
       this.cercaValore = value;
-      this.getUrl(this.cercaValore);
+      this.getSerieTvUrl(value);
+      this.getFilmUrl(value);
     }
   }
 }
