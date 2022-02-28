@@ -5,8 +5,8 @@
     <main class=" text-center text-white">
       <div class="container">
         <h4 class="loader-title" v-if="tvList.length == 0">CERCA TRA GLI ORIGINALI BOOLFIX</h4>
-        <BoolFilm :List="tvList" compTitle="SERIE TV" v-if="tvList.length > 0"/>
-        <BoolFilm :List="filmList" compTitle="FILM" v-if="filmList.length > 0"/>
+        <BoolFilm :List="tvList" compTitle="Serie Tv" v-if="tvList.length > 0"/>
+        <BoolFilm :List="filmList" compTitle="Film" v-if="filmList.length > 0"/>
       </div>
     </main>
 
@@ -29,37 +29,34 @@ export default {
   },
   data() {
     return {
-      // array lista dei film
+      // array lista dei film e serie tv
       tvList: [],
       filmList: [],
-      cercaValore: "",
     };
   },
   methods: {
-    // funzione che richiama attraverso axios api delle serie tv
-    getSerieTvUrl(string) {
-      // riporto il valore string come valore della query in modo tale che mi riporti tutti i valori di tutti i film
+    // funzione per richiamare tramite api la lista delle serie tv
+    getSerieTvUrl(string){
       axios.get(`https://api.themoviedb.org/3/search/tv?api_key=8a21c58330da7597aae0055b9b34eb91&query=${string}&language=it_IT`)
       .then((risposta) => {
-        this.tvList = risposta.data.results;
-      });
+        this.tvList = risposta.data.results
+      })
     },
-     // funzione che richiama attraverso axios api dei film
-    getFilmUrl(string) {
-      // riporto il valore string come valore della query in modo tale che mi riporti tutti i valori di tutti i film
+    // funzione per richiamare tramite api la lista dei film
+    getFilmUrl(string){
       axios.get(`https://api.themoviedb.org/3/search/movie?api_key=8a21c58330da7597aae0055b9b34eb91&query=${string}&language=it_IT`)
       .then((risposta) => {
-        this.filmList = risposta.data.results;
-      });
+        this.filmList = risposta.data.results
+      })
     },
-    // funzione che ricerca il nome/genere selezionato in input all'interno della funzione getUrl(axios api)
+    // funzione per stampare il valore selezionato nella ricerca
     getValoreSelezionato(value) {
-      this.cercaValore = value;
       if(!value) {
         this.tvList = []
         this.filmList = []
         return
       }
+      // richiamo le funzioni e il valore
       this.getSerieTvUrl(value);
       this.getFilmUrl(value);
     }

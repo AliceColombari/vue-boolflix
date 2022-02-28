@@ -2,12 +2,21 @@
   <header>
     <div class="container">
       <h1>BOOLFIX</h1>
+
       <div class="search">
-        <!-- ricerca in input il valore del film e al click sul btn stampa valore -->
-        <!-- aggiunto valore trim: rimuove spazi bianchi inizio e fine di una stringa -->
-        <input type="text" v-model.trim="value" placeholder="Seleziona un film">
-        <button @click="getValore">CERCA</button>
+
+        <input type="text"
+        v-model.trim="value"
+        placeholder="Cerca tra gli originali Boolfix">
+        
+        <button @click="getValore"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+        <i class="fa-solid fa-bell bell"></i>
+
+        <img class="avatar" src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="">
+
       </div>
+      
     </div>
   </header>
 </template>
@@ -40,25 +49,52 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 30px;
         
         h1 {
         color: $boolfix;
-      }
+        // eliminato margin-bottom fastidioso
+        margin-bottom: 0px;
+        }
 
-      .search{
+        .search{
         input {
-          border-radius: 5px #000;
+          width: 200px;
+          font-size: 13px;
+          border-radius: 5px;
+          border: 1px solid $light;
+          background-color: $dark;
+          color: $light;
           padding: 7px;
           cursor: pointer;
-          margin-right: 10px;
+          height: 30px;
+        }
+        
+        button {
+          font-size: 20px;
+          border: none;
+          color: $light;
+          background-color: $dark;
+          margin: 0px 15px;
+          line-height: 30px;
+          vertical-align: middle;
         }
 
-        button {
-          padding: 7px;
-          border-radius: 5px #000;
+        .bell {
+          margin-right: 15px;
+          font-size: 20px;
+          color: $light;
+          line-height: 30px;
+          vertical-align: middle;
+        }
+
+        .avatar {
+          height: 25px;
+          border-radius: 5px;
+          line-height: 30px;
+          vertical-align: middle;
         }
       }
+
       }
     }
 
