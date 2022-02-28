@@ -1,8 +1,15 @@
 <template>
   <div id="app">
     <MyHeader @getEmettiValore="getValoreSelezionato"/>
-    <SerieTv :List="tvList"/>
-    <BoolFilm :List="filmList"/>
+
+    <main class=" text-center text-white">
+      <div class="container">
+        <h4 class="loader-title" v-if="tvList.length == 0">CERCA TRA GLI ORIGINALI BOOLFIX</h4>
+        <BoolFilm :List="tvList" compTitle="SERIE TV" v-if="tvList.length > 0"/>
+        <BoolFilm :List="filmList" compTitle="FILM" v-if="filmList.length > 0"/>
+      </div>
+    </main>
+
   </div>
 </template>
 
@@ -11,7 +18,6 @@
 const axios = require('axios');
 // collegamenti con componenti header e main
 import MyHeader from './components/MyHeader.vue'
-import SerieTv from './components/SerieTv.vue'
 import BoolFilm from './components/BoolFilm.vue'
 
 
@@ -19,7 +25,6 @@ export default {
   name: 'App',
   components: {
     MyHeader,
-    SerieTv,
     BoolFilm
   },
   data() {
@@ -50,6 +55,11 @@ export default {
     // funzione che ricerca il nome/genere selezionato in input all'interno della funzione getUrl(axios api)
     getValoreSelezionato(value) {
       this.cercaValore = value;
+      if(!value) {
+        this.tvList = []
+        this.filmList = []
+        return
+      }
       this.getSerieTvUrl(value);
       this.getFilmUrl(value);
     }
@@ -61,5 +71,17 @@ export default {
 
   // riporto il collegamento con il componente scss con regole general
   @import "./assets/style/general.scss";
+  @import "./assets/style/variabili.scss";
+
+  main {
+    background-color: $mainBg;
+    height: calc(100vh - 70px);
+    // scroll interna anche alla sezione scelta film / serie tv
+    overflow-y: auto;
+
+    .loader-title {
+      margin-top: 100px;
+    }
+  }
 
 </style>

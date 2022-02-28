@@ -3,11 +3,10 @@
     <div class="container">
       <h1>BOOLFIX</h1>
       <div class="search">
-        <!-- milestone 1 -->
         <!-- ricerca in input il valore del film e al click sul btn stampa valore -->
-        <input type="text" v-model="value" placeholder="Seleziona un film">
+        <!-- aggiunto valore trim: rimuove spazi bianchi inizio e fine di una stringa -->
+        <input type="text" v-model.trim="value" placeholder="Seleziona un film">
         <button @click="getValore">CERCA</button>
-        <!-- fine milestone 1 -->
       </div>
     </div>
   </header>
